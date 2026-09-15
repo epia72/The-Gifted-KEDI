@@ -440,7 +440,7 @@ function goStep(step){stop();record.step=step;record.unlocked=Math.max(record.un
 function advance(){goStep(record.step+1);}
 function profileFields(prefix=''){const p=ST.get().profile;return `<div class="inline-form">${field('요원 이름 또는 별명',prefix+'name',p.name,'text','maxlength="16" autocomplete="off"')}${field('소속 모둠 · 선택',prefix+'group',p.group,'text','maxlength="20" autocomplete="off"')}</div>`;}
 function readProfile(prefix=''){const name=$('#'+prefix+'name')?.value.trim()||ST.get().profile.name;if(!name)throw Error('활동에 사용할 이름이나 별명을 적어 주세요.');ST.setProfile(name,$('#'+prefix+'group')?.value||ST.get().profile.group);}
-function routeNow(){stop();close();const [id,level]=(location.hash.slice(1)||'home').split('/');route=ST.ids.includes(id)||id==='home'?id:'home';mode=level==='advanced'?'advanced':'basic';record=null;course=null;if(!route.startsWith('esc')&&route!=='home'){record=ST.course(route,mode)||ST.fresh(route,mode);course=GI.courses.find(x=>x.id===route);}render();window.scrollTo({top:0,behavior:'auto'});}
+function routeNow(){stop();close();const [id,level]=(location.hash.slice(1)||'home').split('/');route=ST.ids.includes(id)||id==='home'?id:'home';mode=level==='advanced'?'advanced':'basic';record=null;course=null;if(!route.startsWith('esc')&&route!=='home'){record=ST.course(route,mode)||ST.fresh(route,mode);if(record.creditOnly)record.step=0;course=GI.courses.find(x=>x.id===route);}render();window.scrollTo({top:0,behavior:'auto'});}
 
 const rankSpecs=[
  ['수사팀원','해당 수사부의 입대 훈련 수료','한 줄 갈매기'],
